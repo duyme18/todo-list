@@ -35,6 +35,7 @@ const taskRoutes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     RouterModule.forRoot(taskRoutes)
   ],
   providers: [TaskService],

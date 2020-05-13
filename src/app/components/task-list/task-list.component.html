@@ -6,6 +6,7 @@
 
 <div class="task-list">
     <!-- Item -->
-    <app-task-item></app-task-item>
+    <app-task-item *ngFor="let task of tasks" [task]="task" (setStatus)="setStatus.emit(task)" (delete)="delete.emit(task.id)">
+    </app-task-item>
     <!-- End item -->
 </div>

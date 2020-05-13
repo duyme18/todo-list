@@ -23,13 +23,13 @@ export class TaskService {
     }
 
     update(task: Task): Observable<Task> {
-        return this.http.put<Task>('${this.API_URL}/${task.id}', {
+        return this.http.put<Task>(`${this.API_URL}/${task.id}`, {
             title: task.title,
             completed: task.completed
         });
     }
 
-    delete(id: Task): Observable<Task> {
-        return this.http.delete<Task>('${this.API_URL}/${task.id}');
+    delete(id: number): Observable<Task> {
+        return this.http.delete<Task>(`${this.API_URL}/${id}`);
     }
 }
