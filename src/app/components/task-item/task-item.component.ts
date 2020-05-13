@@ -11,10 +11,25 @@ export class TaskItemComponent implements OnInit {
   @Input('task') task: Task;
   @Output('setStatus') setStatus = new EventEmitter<any>();
   @Output('delete') delete = new EventEmitter<any>();
+  @Output('update') update = new EventEmitter<any>();
+
+
+  public isEditing: boolean = false;
 
   constructor() { }
 
   ngOnInit() {
   }
-  
+
+  onEditing() {
+    this.isEditing = true;
+  }
+
+  onStopEditing() {
+    this.isEditing = false;
+  }
+
+  onSave(): void {
+    console.log("saving");
+  }
 }

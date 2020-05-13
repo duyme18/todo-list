@@ -1,6 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { TaskService } from './../../services/task.service';
 import { Task } from './../../models/task.class';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -12,14 +13,27 @@ export class TasksComponent implements OnInit {
 
   public tasks: Task[] = [];
   public subscription: Subscription;
+  public subscriptionParams: Subscription;
 
   constructor(
-    public taskService: TaskService
+    public taskService: TaskService,
+    public activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.subscription = this.taskService.getAll().subscribe((tasks: Task[]) => {
-      this.tasks = tasks;
+      this.subscriptionParams = this.activatedRoute.params.subscribe((data: Params) => {
+        let status = data.completed ? (data.completed == 'true' ? 1 : -1) : 0;
+        this.tasks = tasks.filter(data => {
+          if (status == 1) {
+            return data.completed == true;
+          } else if (status == -1) {
+            return data.completed == false;
+          } else {
+            return data;
+          }
+        });
+      });
     });
   }
 
@@ -42,7 +56,13 @@ export class TasksComponent implements OnInit {
     this.subscription = this.taskService.delete(id).subscribe((data: Task) => {
       console.log(data);
       this.updateDataAfterDelete(id);
-    })
+    });
+  }
+
+  onUpdate(task: Task) {
+    this.subscription = this.taskService.update(task).subscribe((data: Task) => {
+      this.updateData(data);
+    });
   }
 
   updateDataAfterDelete(id) {

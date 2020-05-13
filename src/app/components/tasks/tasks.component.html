@@ -6,7 +6,8 @@
     </div>
     <div class="g-col">
         <!-- List -->
-        <app-task-list [tasks]="tasks" (setStatus)="setStatus($event)" (delete)="onDelete($event)">
+        <app-task-list [tasks]="tasks" (setStatus)="setStatus($event)" (delete)="onDelete($event)"
+            (update)="onUpdate($event)">
         </app-task-list>
         <!-- End List -->
     </div>
